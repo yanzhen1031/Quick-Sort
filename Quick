@@ -1,0 +1,55 @@
+#include<iostream>
+using namespace std;
+#include<cstdlib>
+void swap(int &a,int &b);//交换两个数据
+void quickSort(int a[],int begin,int end);//快速排序算法
+int partition(int a[],int begin,int end);//分区算法
+int main(void)
+{
+    int n;
+    cin>>n;
+    int array[50];
+    for(int i=0;i<n;i++)
+    {
+        cin>>array[i];
+    }
+    quickSort(array,0,n-1);
+    for(int i=0;i<n;i++)
+    {
+        cout<<array[i]<<" ";
+    }
+    cout<<endl;
+    system("pause");
+    return 0;
+}
+void swap(int &a,int &b)
+{
+    int temp=a;
+    a=b;
+    b=temp;
+}
+void quickSort(int a[],int begin,int end)
+{
+    if(begin<end)//至少有一个元素
+    {
+        int temp=partition(a,begin,end);//找到一个数，使得左边的都小于它，右边的都大于它
+        quickSort(a,begin,temp-1);//处理左边的
+        quickSort(a,temp+1,end);//处理右边的
+    }
+}
+int partition(int a[],int begin,int end)
+{
+    int i=begin;//起点
+    int j=end+1;//终点
+    int x=a[begin];//开始将第一个元素设为这样一个数，及上面所说的，左小右大
+    while(true)
+    {
+        while(a[++i]<x);//找到第一个比它大的元素
+        while(a[--j]>x);//找到第一个比它小的元素
+        if(i>=j)break;//此处为终点
+        swap(a[i],a[j]);//交换
+    }
+    a[begin]=a[j];//将这个数与第一个数交换
+    a[j]=x;
+    return j;//返回下标
+}
